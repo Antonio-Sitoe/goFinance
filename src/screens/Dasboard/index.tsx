@@ -1,15 +1,34 @@
-import { useState } from "react";
-import { Button, Container, Paragraph } from "./styles";
+import {
+  Container,
+  Header,
+  UserWrapper,
+  UserInfo,
+  Photo,
+  User,
+  UserGreeting,
+  UserName,
+  Power,
+} from "./styles";
 
 function Dashboard() {
-  const [count, setCount] = useState(0);
   return (
     <Container>
-      <Paragraph>Dashboard</Paragraph>
-      <Button
-        title={"Hello world " + count}
-        onPress={() => setCount(count + 1)}
-      />
+      <Header>
+        <UserWrapper>
+          <UserInfo>
+            <Photo
+              source={{
+                uri: "https://avatars.githubusercontent.com/u/72309855?v=4",
+              }}
+            />
+            <User>
+              <UserGreeting>Ola,</UserGreeting>
+              <UserName>Antonio Sitoe</UserName>
+            </User>
+          </UserInfo>
+          <Power name="power" />
+        </UserWrapper>
+      </Header>
     </Container>
   );
 }
