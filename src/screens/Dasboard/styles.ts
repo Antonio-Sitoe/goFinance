@@ -4,14 +4,16 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.attention};
 `;
 
 export const Paragraph = styled.Text`
   color: whitesmoke;
-  margin-bottom: 2rem;
+  font-family: ${({ theme }) => theme.fonts.bold};
+  margin-bottom: 3px;
 `;
 
 export const Button = styled.Button`
   background: #fb5;
+  text-transform: lowercase;
 `;
