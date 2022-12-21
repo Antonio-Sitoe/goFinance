@@ -29,6 +29,7 @@ function Dashboard() {
           <Power name="power" />
         </UserWrapper>
       </Header>
+      <HighLightCard />
     </Container>
   );
 }
