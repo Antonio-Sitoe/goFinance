@@ -8,6 +8,7 @@ export default {
 
     attention: "#E83F5B",
     attention_light: "rgba(232,63,91,.5)",
+    green: "#12A454",
 
     shape: "#FFFFFF",
     title: "#363F5F",

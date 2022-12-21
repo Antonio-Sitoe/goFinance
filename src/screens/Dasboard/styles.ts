@@ -53,5 +53,10 @@ export const UserName = styled.Text`
 
 export const Power = styled(Feather)`
   color: ${({ theme }) => theme.colors.secundary};
-  font-size: ${RFValue(24)}px; ;
+  font-size: ${RFValue(24)}px;
 `;
+export const HighLightCards = styled.ScrollView.attrs({
+  horizontal: true,
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: { paddingLeft: 24 },
+})``;

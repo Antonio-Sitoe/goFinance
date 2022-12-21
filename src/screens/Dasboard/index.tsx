@@ -1,3 +1,4 @@
+import HighLightCard from '../../components/HighLightCard/HighLightCard';
 import {
   Container,
   Header,
@@ -8,6 +9,7 @@ import {
   UserGreeting,
   UserName,
   Power,
+  HighLightCards
 } from "./styles";
 
 function Dashboard() {
@@ -29,7 +31,11 @@ function Dashboard() {
           <Power name="power" />
         </UserWrapper>
       </Header>
-      <HighLightCard />
+      <HighLightCards >
+        <HighLightCard title="Entradas" icon_name="arrow-up-circle" amount="RS 17.400,00" description="Última entrada dia 13 de abril" />
+        <HighLightCard title="Entradas" icon_name="arrow-up-circle" amount="RS 17.400,00" description="Última entrada dia 13 de abril" />
+        <HighLightCard title="Entradas" icon_name="arrow-up-circle" amount="RS 17.400,00" description="Última entrada dia 13 de abril" />
+      </HighLightCards>
     </Container>
   );
 }
