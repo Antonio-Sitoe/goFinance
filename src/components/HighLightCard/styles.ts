@@ -1,13 +1,17 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 
-export const Container = styled.View`
-  background: ${({ theme }) => theme.colors.shape};
+interface TypeProps {
+  type: "up" | "down" | "total";
+}
+
+export const Container = styled.View<TypeProps>`
+  background: ${({ theme, type }) =>
+    type === "total" && css`` ? theme.colors.successs : theme.colors.shape};
   padding: 18px 23px;
   padding-bottom: ${RFValue(42)}px;
   width: ${RFValue(320)}px;
-  /* height: ${RFValue(200)}px; */
   margin-right: 16px;
   border-radius: 5px;
 `;
@@ -18,29 +22,46 @@ export const CardHeader = styled.View`
   justify-content: space-between;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text<TypeProps>`
   font-size: ${RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme, type }) =>
+    type === "total" ? theme.colors.shape : theme.colors.title};
 `;
 
-export const Icon = styled(Feather)`
+export const Icon = styled(Feather)<TypeProps>`
   font-size: ${RFValue(40)}px;
-  color: ${({ theme }) => theme.colors.green};
+
+  ${({ type }) =>
+    type === "up" &&
+    css`
+      color: ${({ theme }) => theme.colors.green};
+    `}
+  ${({ type }) =>
+    type === "down" &&
+    css`
+      color: ${({ theme }) => theme.colors.attention};
+    `}
+  ${({ type }) =>
+    type === "total" &&
+    css`
+      color: ${({ theme }) => theme.colors.shape};
+    `}
 `;
 
 export const CardFooter = styled.View`
   margin-top: ${RFValue(39)}px;
 `;
 
-export const Amount = styled.Text`
+export const Amount = styled.Text<TypeProps>`
   font-size: ${RFValue(32)}px;
   font-family: ${({ theme }) => theme.fonts.medium};
-  line-height: 30px;
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme, type }) =>
+    type === "total" ? theme.colors.shape : theme.colors.title};
 `;
-export const Description = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
+export const Description = styled.Text<TypeProps>`
+  color: ${({ theme, type }) =>
+    type === "total" ? theme.colors.shape : theme.colors.text};
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
 `;

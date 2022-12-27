@@ -1,6 +1,9 @@
 import styled from "styled-components/native";
 import { RFPercentage, RFValue } from "react-native-responsive-fontsize";
 import { Feather } from "@expo/vector-icons";
+import { FlatList } from "react-native";
+
+import { IListItemProps } from ".";
 
 export const Container = styled.View`
   flex: 1;
@@ -16,7 +19,8 @@ export const Header = styled.View`
 
   background-color: ${({ theme }) => theme.colors.primary};
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: ${RFValue(62)}px;
 `;
 
 export const UserWrapper = styled.View`
@@ -55,8 +59,32 @@ export const Power = styled(Feather)`
   color: ${({ theme }) => theme.colors.secundary};
   font-size: ${RFValue(24)}px;
 `;
+
 export const HighLightCards = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
-  contentContainerStyle: { paddingLeft: 24 },
+  contentContainerStyle: { paddingLeft: 20 },
+})`
+  width: 100%;
+  position: absolute;
+  margin-top: ${RFPercentage(21)}px;
+`;
+
+export const Transactions = styled.View`
+  flex: 1;
+  padding: 0 24px;
+  margin-top: ${RFPercentage(16)}px;
+`;
+export const Title = styled.Text`
+  font-size: ${RFValue(18)}px;
+  font-family: ${({ theme }) => theme.fonts.regular};
+`;
+
+export const TransactionsList = styled(
+  FlatList as new () => FlatList<IListItemProps>
+).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingTop: 16,
+  },
 })``;
