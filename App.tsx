@@ -3,6 +3,8 @@ import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components";
 
 import Dashboard from "./src/screens/Dasboard";
+import Register from './src/screens/Register/Register';
+
 import theme from "./src/global/styles/theme";
 
 import {
@@ -12,6 +14,7 @@ import {
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
 import { View, Text } from "react-native";
+import CategorySelect from './src/screens/CategorySelect/CategorySelect';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -30,7 +33,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar />
-      <Dashboard />
+      <CategorySelect />
     </ThemeProvider>
   );
 }
