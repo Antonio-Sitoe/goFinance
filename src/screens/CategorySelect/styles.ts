@@ -19,11 +19,14 @@ export const Title = styled.Text`
   font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.shape};
 `;
-export const Category = styled.View`
+export const Category = styled.TouchableOpacity<{ isActive: boolean }>`
   width: 100%;
   padding: ${RFValue(15)}px;
   flex-direction: row;
   align-items: center;
+
+  background: ${({ theme, isActive }) =>
+    isActive ? theme.colors.secundary_light : theme.colors.background};
 `;
 export const Icon = styled(Feather)`
   font-family: ${({ theme }) => theme.fonts.regular};
