@@ -1,9 +1,9 @@
 import React from 'react'
 import Button from '../../components/Forms/Button/Button'
-import Input from '../../components/Forms/Input/Input'
 import CategorySelect from '../CategorySelect/CategorySelect'
 import CategorySelectButton from '../../components/Forms/CategorySelectButton/CategorySelectButton'
 import TransactionTypeButton from '../../components/Forms/TransactionTypeButton/TransactionTypeButton'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from 'react-native'
 import { useForm } from 'react-hook-form'
@@ -19,11 +19,20 @@ import {
   TransactionTypes
 } from './style'
 import InputForm from '../../components/Forms/InputForm/InputForm'
+import uuid from 'react-native-uuid';
+import { useNavigation } from '@react-navigation/native'
 
 type ItransactionType = 'up' | "down"
+
+
 interface FormData {
   name: string
   amount: string
+}
+
+interface IDataToSave extends FormData {
+  transactionType: ItransactionType,
+  category: string
 }
 
 const schema = yup.object().shape({
@@ -38,9 +47,13 @@ function Register() {
     key: "category",
     name: "Categoria"
   })
-  const { control, handleSubmit, formState: { errors } } = useForm({
+
+  const navigation = useNavigation()
+  const { control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
+  const dataKey = '@gofinances:transactions'
+
 
   function handleTransactionType(type: ItransactionType) {
     setSTransactionTypeselected(type)
@@ -55,18 +68,43 @@ function Register() {
   function validateFieldsBeforeSendData() {
     if (!transactionTypeselected) return Alert.alert("Selecione uma transacao")
     if (category.key === 'category') return Alert.alert("Selecione a categoria")
-
   }
-  function handleRegister(form: FormData) {
-    validateFieldsBeforeSendData()
 
+  async function SaveToAsyncStorage(data: IDataToSave) {
+    try {
+      // Salvar dados no Async storage
+      const takeData = await AsyncStorage.getItem(dataKey);
+      const haveData = takeData ? JSON.parse(takeData) : [];
+      const newData = [...haveData, data]
+
+      await AsyncStorage.setItem(dataKey, JSON.stringify(newData));
+      Alert.alert("Armazenado com sucesso!");
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Nao foi possivel Salvar")
+    } finally {
+      setSTransactionTypeselected("up")
+      setCategory({
+        key: "category",
+        name: "Categoria"
+      })
+      reset()
+      navigation.navigate("Listagem")
+    }
+  }
+  async function handleRegister(form: FormData) {
+    validateFieldsBeforeSendData()
     const data = {
       ...form,
       transactionType: transactionTypeselected,
-      category: category.key
+      category: category.key,
+      date: new Date(),
+      id: String(uuid.v4())
     }
-    console.log(data)
+    await SaveToAsyncStorage(data)
   }
+
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>

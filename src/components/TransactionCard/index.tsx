@@ -3,7 +3,7 @@ import { Container, Title, Amount, Footer, Icon, CategoryName, Date, Category } 
 
 interface TransactionCardProps {
   type: "positive" | "negative"
-  title: string
+  name: string
   amount: string
   category: {
     icon: string
@@ -12,10 +12,10 @@ interface TransactionCardProps {
   date: String
 }
 
-function TransactionCard({ title, amount, category, date, type }: TransactionCardProps) {
+function TransactionCard({ name, amount, category, date, type }: TransactionCardProps) {
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>{name}</Title>
       <Amount type={type}>
         {type === 'negative' && '- '}
         {amount}</Amount>
