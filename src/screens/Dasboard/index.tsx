@@ -13,7 +13,8 @@ import {
   HighLightCards,
   Transactions,
   Title,
-  TransactionsList
+  TransactionsList,
+  LogoutButton
 } from "./styles";
 
 export interface IListItemProps {
@@ -91,7 +92,9 @@ function Dashboard() {
               <UserName>Antonio Sitoe</UserName>
             </User>
           </UserInfo>
-          <Power name="power" />
+          <LogoutButton onPress={() => { }}>
+            <Power name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
       <HighLightCards >
