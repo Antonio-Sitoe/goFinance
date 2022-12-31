@@ -22,7 +22,7 @@ import InputForm from '../../components/Forms/InputForm/InputForm'
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native'
 
-type ItransactionType = 'up' | "down"
+type ItransactionType = "positive" | "negative"
 
 
 interface FormData {
@@ -40,8 +40,9 @@ const schema = yup.object().shape({
   amount: yup.number().typeError("Informe um valor numerico").positive("O valor nao pode ser negativo").required("O valor e obrigatorio")
 })
 
+
 function Register() {
-  const [transactionTypeselected, setSTransactionTypeselected] = React.useState<ItransactionType>('up');
+  const [transactionTypeselected, setSTransactionTypeselected] = React.useState<ItransactionType>('positive');
   const [categoryModalOpen, setCategoryModalOpen] = React.useState<boolean>(false);
   const [category, setCategory] = React.useState({
     key: "category",
@@ -83,7 +84,7 @@ function Register() {
       console.log(error)
       Alert.alert("Nao foi possivel Salvar")
     } finally {
-      setSTransactionTypeselected("up")
+      setSTransactionTypeselected("positive")
       setCategory({
         key: "category",
         name: "Categoria"
@@ -96,7 +97,7 @@ function Register() {
     validateFieldsBeforeSendData()
     const data = {
       ...form,
-      transactionType: transactionTypeselected,
+      type: transactionTypeselected,
       category: category.key,
       date: new Date(),
       id: String(uuid.v4())
@@ -132,13 +133,13 @@ function Register() {
             />
             <TransactionTypes>
               <TransactionTypeButton
-                isActive={transactionTypeselected === 'up'}
-                onPress={() => handleTransactionType('up')}
+                isActive={transactionTypeselected === 'positive'}
+                onPress={() => handleTransactionType('positive')}
                 title='Income'
                 type='up' />
               <TransactionTypeButton
-                isActive={transactionTypeselected === 'down'}
-                onPress={() => handleTransactionType('down')}
+                isActive={transactionTypeselected === 'negative'}
+                onPress={() => handleTransactionType('negative')}
                 title='OutCome'
                 type='down' />
             </TransactionTypes>

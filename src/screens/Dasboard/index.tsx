@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
 import HighLightCard from '../../components/HighLightCard/HighLightCard';
 import TransactionCard from '../../components/TransactionCard';
@@ -31,69 +32,68 @@ export interface IListItemProps {
   date: String
 }
 
+interface HighLightProps {
+  total: string
+}
+interface HighLightData {
+  entries: HighLightProps
+  expensive: HighLightProps
+}
 function Dashboard() {
-  // const [data, setData] = React.useState()
+  const [transactions, setTransactions] = React.useState<IListItemProps[]>([])
+  const [highlight, setHighlight] = React.useState<HighLightData>({} as HighLightData)
   const dataKey = '@gofinances:transactions'
+  let entriesTotal = 0;
+  let expensiveTotal = 0;
 
   async function loadTransacion() {
     const response = await AsyncStorage.getItem(dataKey)
-    const transaction = response !== null || response !== undefined ? JSON.parse(response) : []
-    console.log(transaction)
+    const transactions = response ? JSON.parse(response) : []
+    const transactionFormated: IListItemProps[] = transactions.map((item: IListItemProps) => {
+
+      if (item.type === "positive") {
+        entriesTotal += Number(item.amount)
+      } else {
+        expensiveTotal += Number(item.amount)
+      }
+
+      const amount = Number(item.amount).toLocaleString('pt-MZ', { style: 'currency', currency: "MZN" })
+      const dateFormated = Intl.DateTimeFormat('pt-MZ', {
+        day: "2-digit",
+        month: "2-digit",
+        year: "2-digit"
+      }).format(new Date(item.date))
+      return {
+        id: item.id,
+        name: item.name,
+        type: item.type,
+        category: item.category,
+        date: dateFormated,
+        amount
+      }
+    })
+    setTransactions(transactionFormated)
+    setHighlight({
+      entries: {
+        total: Number(entriesTotal).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
+      },
+      expensive: {
+        total: Number(expensiveTotal).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
+      }
+    })
 
   }
 
   React.useEffect(() => {
-
-
     loadTransacion()
   }, [])
 
-  const data: IListItemProps[] = [
-    {
-      id: `${Math.random() * 1600}`,
-      type: "positive",
-      name: 'Desenvolvimento de site',
-      amount: 'R$ 12.000,00',
-      category: {
-        icon: "dollar-sign",
-        name: "category",
-      },
-      date: "13/04/2020"
-    },
-    {
-      id: `${Math.random() * 1600}`,
-      type: "negative",
-      name: 'Aluguer de apartamento',
-      amount: 'R$ 12.000,00',
-      category: {
-        icon: "coffee",
-        name: "Alimentacao",
-      },
-      date: "13/04/2020"
-    },
-    {
-      id: `${Math.random() * 1600}`,
-      type: "positive",
-      name: 'Desenvolvimento de site',
-      amount: 'R$ 12.000,00',
-      category: {
-        icon: "shopping-cart",
-        name: "Compras",
-      },
-      date: "13/04/2020"
-    },
-    {
-      id: `${Math.random() * 1600}`,
-      type: "negative",
-      name: 'Desenvolvimento de site',
-      amount: 'R$ 12.000,00',
-      category: {
-        icon: "dollar-sign",
-        name: "Vendas",
-      },
-      date: "13/04/2020"
-    }
-  ]
+  useFocusEffect(
+    React.useCallback(() => {
+      loadTransacion();
+    }, [])
+  );
+
   return (
     <Container>
       <Header>
@@ -123,17 +123,14 @@ function Dashboard() {
       <Transactions>
         <Title>Listagem</Title>
         <TransactionsList
-          data={data}
+          data={transactions}
           keyExtractor={(item: IListItemProps) => item.id}
           renderItem={({ item }: { item: IListItemProps }) => (
             <TransactionCard
               type={item.type}
               name={item?.name}
               amount={item?.amount}
-              category={{
-                icon: item.category.icon,
-                name: item.category.name
-              }}
+              category={`${item.category}`}
               date={item.date}
             />
           )}
