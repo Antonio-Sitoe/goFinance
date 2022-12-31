@@ -32,41 +32,68 @@ export interface IListItemProps {
 }
 
 function Dashboard() {
-  const [data, setData] = React.useState<IListItemProps[]>([])
+  // const [data, setData] = React.useState()
   const dataKey = '@gofinances:transactions'
 
-  const formateDate = (date: Date) => Intl.DateTimeFormat('pt-BR', {
-    day: '2-digit',
-    month: "2-digit",
-    year: "2-digit",
-  }).format(date)
+  async function loadTransacion() {
+    const response = await AsyncStorage.getItem(dataKey)
+    const transaction = response !== null || response !== undefined ? JSON.parse(response) : []
+    console.log(transaction)
 
-  async function loadTransactions() {
-
-    try {
-      const response = await AsyncStorage.getItem(dataKey)
-      const transactions = response ? JSON.parse(response) : []
-      const transactionFormated: IListItemProps[] = transactions
-        .map(({ amount, date, category, id, name, type }: IListItemProps) => {
-          return {
-            amount: Number(amount).toLocaleString('pt-PT', { style: 'currency', currency: "MZN" }),
-            date,
-            category,
-            id,
-            name,
-            type
-          }
-        })
-      setData(transactions)
-    } catch (error) {
-      console.log(error)
-    }
   }
 
   React.useEffect(() => {
-    loadTransactions()
+
+
+    loadTransacion()
   }, [])
 
+  const data: IListItemProps[] = [
+    {
+      id: `${Math.random() * 1600}`,
+      type: "positive",
+      name: 'Desenvolvimento de site',
+      amount: 'R$ 12.000,00',
+      category: {
+        icon: "dollar-sign",
+        name: "category",
+      },
+      date: "13/04/2020"
+    },
+    {
+      id: `${Math.random() * 1600}`,
+      type: "negative",
+      name: 'Aluguer de apartamento',
+      amount: 'R$ 12.000,00',
+      category: {
+        icon: "coffee",
+        name: "Alimentacao",
+      },
+      date: "13/04/2020"
+    },
+    {
+      id: `${Math.random() * 1600}`,
+      type: "positive",
+      name: 'Desenvolvimento de site',
+      amount: 'R$ 12.000,00',
+      category: {
+        icon: "shopping-cart",
+        name: "Compras",
+      },
+      date: "13/04/2020"
+    },
+    {
+      id: `${Math.random() * 1600}`,
+      type: "negative",
+      name: 'Desenvolvimento de site',
+      amount: 'R$ 12.000,00',
+      category: {
+        icon: "dollar-sign",
+        name: "Vendas",
+      },
+      date: "13/04/2020"
+    }
+  ]
   return (
     <Container>
       <Header>
@@ -101,7 +128,7 @@ function Dashboard() {
           renderItem={({ item }: { item: IListItemProps }) => (
             <TransactionCard
               type={item.type}
-              name={item?.title}
+              name={item?.name}
               amount={item?.amount}
               category={{
                 icon: item.category.icon,
