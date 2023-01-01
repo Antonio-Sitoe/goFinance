@@ -33,11 +33,12 @@ export interface IListItemProps {
 }
 
 interface HighLightProps {
-  total: string
+  amount: string
 }
 interface HighLightData {
   entries: HighLightProps
   expensive: HighLightProps
+  total: HighLightProps
 }
 function Dashboard() {
   const [transactions, setTransactions] = React.useState<IListItemProps[]>([])
@@ -72,20 +73,24 @@ function Dashboard() {
         amount
       }
     })
+    const total = entriesTotal - expensiveTotal;
     setTransactions(transactionFormated)
     setHighlight({
       entries: {
-        total: Number(entriesTotal).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
+        amount: Number(entriesTotal).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
       },
       expensive: {
-        total: Number(expensiveTotal).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
+        amount: Number(expensiveTotal).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
+      },
+      total: {
+        amount: Number(total).toLocaleString('pt-MZ', { style: "currency", currency: "MZN" })
       }
     })
 
   }
 
   React.useEffect(() => {
-    loadTransacion()
+    loadTransacion();
   }, [])
 
   useFocusEffect(
@@ -115,9 +120,9 @@ function Dashboard() {
         </UserWrapper>
       </Header>
       <HighLightCards >
-        <HighLightCard title="Entradas" type="up" icon_name="arrow-up-circle" amount="RS 17.400,00" description="Última entrada dia 13 de abril" />
-        <HighLightCard title="Saídas" type="down" icon_name="arrow-down-circle" amount="R$ 1.259,00" description="Última saída dia 03 de abril" />
-        <HighLightCard title="Total" type='total' icon_name="dollar-sign" amount="R$ 16.141,00" description="01 à 16 de abril" />
+        <HighLightCard title="Entradas" type="up" icon_name="arrow-up-circle" amount={highlight?.entries?.amount} description="Última entrada dia 13 de abril" />
+        <HighLightCard title="Saídas" type="down" icon_name="arrow-down-circle" amount={highlight?.expensive?.amount} description="Última saída dia 03 de abril" />
+        <HighLightCard title="Total" type='total' icon_name="dollar-sign" amount={highlight?.total?.amount} description="01 à 16 de abril" />
       </HighLightCards>
 
       <Transactions>
