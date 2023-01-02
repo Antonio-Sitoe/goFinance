@@ -56,12 +56,9 @@ function Dashboard() {
   function getLastTransactionDate(collection: IListItemProps[], type: "positive" | "negative") {
     const lastTransaction = new Date(Math.max.apply(Math, collection.filter(transaction => transaction.type === type)
       .map(transactions => new Date(transactions.date).getTime())))
-    console.log("data", lastTransaction)
-
     const date = lastTransaction.getDate() ? lastTransaction.getDate() : "--"
     const month = lastTransaction.toLocaleString('pt-MZ', { month: "long" })
     const verifyMonth = month.includes('Invalid') ? "--" : month
-
     return `${date} de ${verifyMonth}`
   }
 

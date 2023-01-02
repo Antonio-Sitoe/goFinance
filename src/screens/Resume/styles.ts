@@ -33,12 +33,17 @@ export const MonthSelect = styled.View`
   justify-content: space-between;
   margin-top: 24px;
 `;
-
-export const MonthSelectButton = styled(BorderlessButton)``;
+export const MonthSelectButton = styled.TouchableOpacity``;
 export const MonthSelectIcon = styled(Feather)`
   font-size: ${RFValue(24)}px;
 `;
 export const Month = styled.Text`
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
+`;
+
+export const LoadContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
