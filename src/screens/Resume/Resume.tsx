@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { HistoryCard } from '../../components/HistoryCard'
-import { Container, Header, Title, Content, ChartContainer } from './styles'
+import { Container, Header, Title, Content, ChartContainer, MonthSelect, MonthSelectButton, MonthSelectIcon, Month } from './styles'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { categories } from '../../utils/category';
 import { VictoryPie } from 'victory-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 interface TransactionData {
   id: string;
@@ -78,7 +79,26 @@ function Resume() {
         <Title>Resumo por categoria</Title>
       </Header>
 
-      <Content>
+      <Content
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          padding: 24,
+          paddingBottom: useBottomTabBarHeight(),
+        }}
+      >
+
+        <MonthSelect>
+          <MonthSelectButton>
+            <MonthSelectIcon name="chevron-left" />
+          </MonthSelectButton>
+
+          <Month>Maio</Month>
+
+          <MonthSelectButton>
+            <MonthSelectIcon name="chevron-right" />
+          </MonthSelectButton>
+
+        </MonthSelect>
         <ChartContainer>
           <VictoryPie
             data={totalByCategories}
@@ -100,7 +120,7 @@ function Resume() {
         })}
       </Content>
 
-    </Container>
+    </Container >
   )
 }
 
