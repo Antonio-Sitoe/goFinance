@@ -1,6 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components";
+import { } from '../'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-MZ'
 
@@ -16,6 +17,7 @@ import {
 import { View, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/routes/app.routes';
+import { SignIn } from './src/screens/SignIn/SignIn';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -32,11 +34,14 @@ export default function App() {
     );
   }
   return (
-    <NavigationContainer>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+
         <StatusBar style='light' />
-        <AppRoutes />
-      </ThemeProvider>
-    </NavigationContainer>
+        <AuthProvider>
+          <SignIn />
+        </AuthProvider>
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
