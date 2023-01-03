@@ -1,10 +1,9 @@
-import React from "react";
-import { StatusBar } from "expo-status-bar";
-import { ThemeProvider } from "styled-components";
-import { } from '../'
 import 'intl'
 import 'intl/locale-data/jsonp/pt-MZ'
 
+import React from "react";
+import { StatusBar } from "expo-status-bar";
+import { ThemeProvider } from "styled-components";
 
 import theme from "./src/global/styles/theme";
 
@@ -14,10 +13,12 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from "@expo-google-fonts/poppins";
+
 import { View, Text } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { AppRoutes } from './src/routes/app.routes';
 import { SignIn } from './src/screens/SignIn/SignIn';
+import { AuthProvider } from './src/Context/AuthContext';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -36,7 +37,6 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
-
         <StatusBar style='light' />
         <AuthProvider>
           <SignIn />

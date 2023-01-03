@@ -21,8 +21,6 @@ export const ImageContainer = styled.View`
 export const Title = styled.Text`
   text-align: center;
   flex: 1;
-  color: ${({ theme }) => theme.colors.text};
   font-size: ${RFValue(14)}px;
-
   font-family: ${({ theme }) => theme.fonts.medium};
 `;

@@ -3,6 +3,7 @@ import AppleSvg from '../../assets/apple.svg'
 import GoogleSvg from '../../assets/google.svg'
 import LogoSvg from '../../assets/Logo.svg'
 import { SignInSocialButton } from '../../components/SignInSocialButton/SignInSocialButton';
+import useAuth from '../../hooks/useAuth';
 
 import {
   Container,
@@ -16,6 +17,7 @@ import {
 
 
 export function SignIn() {
+  const { user } = useAuth()
 
   return <Container>
     <Header>
