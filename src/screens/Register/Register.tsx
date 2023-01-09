@@ -21,6 +21,7 @@ import {
 import InputForm from '../../components/Forms/InputForm/InputForm'
 import uuid from 'react-native-uuid';
 import { useNavigation } from '@react-navigation/native'
+import useAuth from '../../hooks/useAuth'
 
 type ItransactionType = "positive" | "negative"
 
@@ -48,6 +49,7 @@ function Register() {
     key: "category",
     name: "Categoria"
   })
+  const { setIsChangeSomething } = useAuth();
 
   const navigation = useNavigation()
   const { control, handleSubmit, reset, formState: { errors } } = useForm({
@@ -91,6 +93,7 @@ function Register() {
       })
       reset()
       navigation.navigate("Listagem")
+      setIsChangeSomething(true)
     }
   }
   async function handleRegister(form: FormData) {

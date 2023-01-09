@@ -22,6 +22,7 @@ import {
   LogoutButton,
   LoadContainer
 } from "./styles";
+import useAuth from '../../hooks/useAuth';
 
 export interface IListItemProps {
   id: string;
@@ -45,6 +46,7 @@ interface HighLightData {
   total: HighLightProps
 }
 function Dashboard() {
+  const { isChangeSomething } = useAuth();
   const [isLoading, setIsLoading] = React.useState(true)
   const [transactions, setTransactions] = React.useState<IListItemProps[]>([])
   const [highlight, setHighlight] = React.useState<HighLightData>({} as HighLightData)
@@ -115,13 +117,13 @@ function Dashboard() {
 
   React.useEffect(() => {
     loadTransacion();
-  }, [])
+  }, [isChangeSomething])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      loadTransacion();
-    }, [])
-  );
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     loadTransacion();
+  //   }, [])
+  // );
 
   return (
     <Container>

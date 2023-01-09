@@ -16,8 +16,12 @@ import {
 } from './styles';
 
 
+
+// 990647836870-p6fhnnu9vn8q6ksp2b3vlgt5dt90920k.apps.googleusercontent.com
+
+
 export function SignIn() {
-  const { user } = useAuth()
+  const { user, SignInWithGoogle } = useAuth()
 
   return <Container>
     <Header>
@@ -36,7 +40,7 @@ export function SignIn() {
 
     <Footer>
       <FooterWrapper>
-        <SignInSocialButton svg={GoogleSvg} title="Entrar com o Google" />
+        <SignInSocialButton onPress={async () => await SignInWithGoogle()} svg={GoogleSvg} title="Entrar com o Google" />
         <SignInSocialButton svg={AppleSvg} title="Entrar com Apple" />
       </FooterWrapper>
 
