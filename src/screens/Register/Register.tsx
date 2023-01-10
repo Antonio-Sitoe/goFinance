@@ -43,20 +43,19 @@ const schema = yup.object().shape({
 
 
 function Register() {
+  const { user } = useAuth()
   const [transactionTypeselected, setSTransactionTypeselected] = React.useState<ItransactionType>('positive');
   const [categoryModalOpen, setCategoryModalOpen] = React.useState<boolean>(false);
   const [category, setCategory] = React.useState({
     key: "category",
     name: "Categoria"
   })
-  const { setIsChangeSomething } = useAuth();
 
   const navigation = useNavigation()
   const { control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   })
-  const dataKey = '@gofinances:transactions'
-
+  const dataKey = `@gofinances:transactions_user:${user.id}`
 
   function handleTransactionType(type: ItransactionType) {
     setSTransactionTypeselected(type)
@@ -93,7 +92,6 @@ function Register() {
       })
       reset()
       navigation.navigate("Listagem")
-      setIsChangeSomething(true)
     }
   }
   async function handleRegister(form: FormData) {

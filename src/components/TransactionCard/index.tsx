@@ -20,8 +20,8 @@ function TransactionCard({ name, amount, category, date, type }: TransactionCard
         {amount}</Amount>
       <Footer>
         <Category>
-          <Icon name={categoryFormated.icon} />
-          <CategoryName>{categoryFormated.name}</CategoryName>
+          <Icon name={categoryFormated?.icon} />
+          <CategoryName>{categoryFormated?.name}</CategoryName>
         </Category>
         <Date>{date}</Date>
       </Footer>

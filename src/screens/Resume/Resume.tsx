@@ -11,6 +11,7 @@ import { addMonths, format, subMonths } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { ActivityIndicator } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
+import useAuth from '../../hooks/useAuth';
 
 interface TransactionData {
   id: string;
@@ -35,6 +36,7 @@ function Resume() {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   const [isLoading, setIsLoading] = React.useState(false)
   const { colors } = useTheme()
+  const { user } = useAuth()
 
   function handleChangeDate(action: "next" | 'preview') {
     switch (action) {
@@ -56,7 +58,7 @@ function Resume() {
 
   async function loadData() {
     setIsLoading(true)
-    const dataKey = '@gofinances:transactions'
+    const dataKey = `@gofinances:transactions_user:${user.id}`
     const response = await AsyncStorage.getItem(dataKey);
     const responseFormated = response ? JSON.parse(response) : [];
 

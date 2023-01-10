@@ -46,11 +46,11 @@ interface HighLightData {
   total: HighLightProps
 }
 function Dashboard() {
-  const { isChangeSomething } = useAuth();
+  const { SignOut, user } = useAuth();
   const [isLoading, setIsLoading] = React.useState(true)
   const [transactions, setTransactions] = React.useState<IListItemProps[]>([])
   const [highlight, setHighlight] = React.useState<HighLightData>({} as HighLightData)
-  const dataKey = '@gofinances:transactions'
+  const dataKey = `@gofinances:transactions_user:${user.id}`
   let entriesTotal = 0;
   let expensiveTotal = 0;
   const { colors } = useTheme()
@@ -115,15 +115,13 @@ function Dashboard() {
     setIsLoading(false)
   }
 
-  React.useEffect(() => {
-    loadTransacion();
-  }, [isChangeSomething])
 
-  // useFocusEffect(
-  //   React.useCallback(() => {
-  //     loadTransacion();
-  //   }, [])
-  // );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadTransacion();
+    }, [])
+  );
 
   return (
     <Container>
@@ -138,15 +136,15 @@ function Dashboard() {
               <UserInfo>
                 <Photo
                   source={{
-                    uri: "https://avatars.githubusercontent.com/u/72309855?v=4",
+                    uri: user.photo,
                   }}
                 />
                 <User>
                   <UserGreeting>Ola,</UserGreeting>
-                  <UserName>Antonio Sitoe</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
-              <LogoutButton onPress={() => { }}>
+              <LogoutButton onPress={SignOut}>
                 <Power name="power" />
               </LogoutButton>
             </UserWrapper>
