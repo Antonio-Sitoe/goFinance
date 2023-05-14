@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
+    "test": "jest",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web"
@@ -12,6 +13,9 @@
     "preset": "jest-expo",
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ]
   },
   "dependencies": {
@@ -55,15 +59,22 @@
     "@babel/core": "^7.12.9",
     "@testing-library/jest-native": "^5.4.2",
     "@testing-library/react-native": "^12.1.2",
+    "@types/jest": "^29.5.1",
+    "@types/mocha": "^10.0.1",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
     "@types/styled-components-react-native": "^5.2.0",
+    "jest": "^26.6.3",
+    "jest-expo": "^48.0.2",
+    "jest-fetch-mock": "^3.0.3",
+    "jest-styled-components": "^7.0.8",
     "react-native-intl": "^1.0.0",
     "react-native-svg-transformer": "^1.0.0",
     "typescript": "^4.6.3"
   },
   "resolutions": {
-    "react-native-svg": "13.4.0"
+    "react-native-svg": "13.4.0",
+    "@jest/create-cache-key-function": "^27.0.1"
   },
   "private": true
 }
