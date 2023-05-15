@@ -1,13 +1,13 @@
-import React from 'react'
-import { TextInputProps } from 'react-native'
-import { ContainerInput } from './style'
+import React from "react";
+import { TextInputProps } from "react-native";
+import { ContainerInput } from "./style";
 
-type InputProps = TextInputProps;
-
-function Input({ ...props }: InputProps) {
-  return (
-    <ContainerInput  {...props} />
-  )
+interface InputProps extends TextInputProps {
+  active?: boolean;
 }
 
-export default Input
+function Input({ active = false, ...props }: InputProps) {
+  return <ContainerInput active={active} {...props} />;
+}
+
+export default Input;
